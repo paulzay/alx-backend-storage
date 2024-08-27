@@ -1,0 +1,3 @@
+// regex filter
+
+db.find({ name: /.*m.*/ }).pretty()
