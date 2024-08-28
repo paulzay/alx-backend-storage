@@ -27,9 +27,9 @@ class Cache():
         return None
 
     def get_str(self, key: str) -> str:
-        """ get string"""
+        """ get string """
         return self.get(key, fn=str)
 
     def get_int(self, key: str) -> int:
-        """ get int"""
+        """ get int """
         return self.get(key, fn=int)
