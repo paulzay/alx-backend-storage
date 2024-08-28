@@ -18,3 +18,18 @@ class Cache():
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
+    
+    def get(self, key, fn):
+        """ get key and data """
+        value = self._redis.get(key)
+        if value:
+            return fn(value)
+        return None
+
+    def get_str(self, key: str) -> str:
+        """ get string"""
+        return self.get(key, fn=str)
+
+    def get_int(self, key: str) -> int:
+        """ get int"""
+        return self.get(key, fn=int)
