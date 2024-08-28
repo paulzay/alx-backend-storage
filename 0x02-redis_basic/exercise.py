@@ -19,12 +19,14 @@ class Cache():
         self._redis.set(key, data)
         return key
     
-    def get(self, key, fn):
-        """ get key and data """
-        value = self._redis.get(key)
-        if value:
-            return fn(value)
-        return None
+    def get(self,
+            key: str,
+            fn: Optional[Callable] = None) -> Union[str, bytes, int, float]:
+        """ get key and data"""
+        data = self._redis.get(key)
+        if fn is not None:
+            data = fn(data)
+        return data
 
     def get_str(self, key: str) -> str:
         """ get string """
@@ -33,3 +35,9 @@ class Cache():
     def get_int(self, key: str) -> int:
         """ get int """
         return self.get(key, fn=int)
+    
+    def count_calls(self, fn):
+        """ count calls """
+        key = f"count:{fn.__name__}"
+        self._redis.incr(key)
+        return fn
